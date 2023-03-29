@@ -14,11 +14,23 @@ populateTextarea();
 
 function onFormSubmit(e) {
   e.preventDefault();
-  localStorage.removeItem(STORAGE_KEY);
-  e.currentTarget.reset();
+  const inputs = refs.form.querySelectorAll('input[type="text"], textarea');
+  let isFormValid = true;
 
-  console.log(formData);
-  formData = {};
+  inputs.forEach(input => {
+    if (!input.value.trim()) {
+      isFormValid = false;
+    }
+  });
+
+  if (isFormValid) {
+    localStorage.removeItem(STORAGE_KEY);
+    e.currentTarget.reset();
+    console.log(formData);
+    formData = {};
+  } else {
+    alert('Please fill in all fields before submitting the form');
+  }
 }
 
 function onTextareaInput(e) {
